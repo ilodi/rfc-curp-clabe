@@ -17,3 +17,11 @@
 > WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 > COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 > OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
+`datos/sat.json`, `datos/sat-productos.json` y `datos/sat-cp.json` (catálogos del SAT para CFDI 4.0, versión del
+29 de octubre de 2026) se generaron a partir de
+[phpcfdi/resources-sat-catalogs](https://github.com/phpcfdi/resources-sat-catalogs), publicado como dominio
+público bajo [The Unlicense](https://unlicense.org/). La información original es del Servicio de Administración
+Tributaria (SAT).

@@ -1,8 +1,8 @@
 {
   "name": "rfc-curp-clabe",
   "displayName": "RFC CURP CLABE",
-  "description": "RFC, CURP y CLABE en VS Code: explica, valida, corrige el dígito verificador y genera datos de prueba. Todo local.",
-  "version": "0.1.1",
+  "description": "RFC, CURP, CLABE y catálogos del SAT (CFDI 4.0) en VS Code: explica, valida, autocompleta y genera datos de prueba. Todo local.",
+  "version": "0.2.0",
   "publisher": "lodi",
   "license": "MIT",
   "icon": "icon.png",
@@ -31,7 +31,13 @@
     "cfdi",
     "banco",
     "validador",
-    "datos de prueba"
+    "datos de prueba",
+    "cfdi 4.0",
+    "factura",
+    "uso cfdi",
+    "régimen fiscal",
+    "código postal",
+    "clave prod serv"
   ],
   "galleryBanner": {
     "color": "#1a1d24",
@@ -63,6 +69,11 @@
           "type": "boolean",
           "default": true,
           "description": "Subraya los RFC, CURP y CLABE inválidos. Un número de 18 dígitos solo se revisa como CLABE si antes, en la misma línea, dice \"clabe\"."
+        },
+        "rfcCurpClabe.catalogos": {
+          "type": "boolean",
+          "default": true,
+          "description": "Catálogos del SAT para CFDI 4.0: explica, autocompleta y valida claves (UsoCFDI, RegimenFiscal, FormaPago, MetodoPago, ClaveProdServ, ClaveUnidad, código postal…)."
         }
       }
     }
