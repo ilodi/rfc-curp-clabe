@@ -1,0 +1,70 @@
+{
+  "name": "mx-dev-tools",
+  "displayName": "MX Dev Tools",
+  "description": "RFC, CURP y CLABE en VS Code: explica, valida, corrige el dígito verificador y genera datos de prueba. Todo local.",
+  "version": "0.1.0",
+  "publisher": "lodi",
+  "license": "MIT",
+  "icon": "icon.png",
+  "preview": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilodi/mx-dev-tools"
+  },
+  "sponsor": {
+    "url": "https://paypal.me/lodidev"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "mexico",
+    "méxico",
+    "rfc",
+    "curp",
+    "clabe",
+    "sat",
+    "cfdi",
+    "banco",
+    "validador",
+    "datos de prueba"
+  ],
+  "galleryBanner": {
+    "color": "#1a1d24",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mxDevTools.generar",
+        "title": "MX Dev Tools: Generar dato de prueba (RFC, CURP, CLABE)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "mxDevTools.generar",
+          "group": "1_modification@99"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "MX Dev Tools",
+      "properties": {
+        "mxDevTools.avisos": {
+          "type": "boolean",
+          "default": true,
+          "description": "Subraya los RFC, CURP y CLABE inválidos. Un número de 18 dígitos solo se revisa como CLABE si antes, en la misma línea, dice \"clabe\"."
+        }
+      }
+    }
+  }
+}

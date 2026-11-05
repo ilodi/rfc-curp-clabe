@@ -1,0 +1,25 @@
+# Publica en el Marketplace de VS Code al subir una etiqueta de versión (por ejemplo v0.2.4).
+# Usa Trusted Publishing (OIDC): no guarda contraseñas ni tokens.
+name: Publicar en el Marketplace
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # para Trusted Publishing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Revisar que la etiqueta coincide con package.json
+        run: |
+          v=$(node -p "require('./package.json').version")
+          [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "La etiqueta $GITHUB_REF_NAME no coincide con la versión $v de package.json"; exit 1; }
+      - name: Publicar
+        run: npx -y @vscode/vsce@4.1.0 publish --oidc --skip-duplicate

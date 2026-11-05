@@ -1,0 +1,5 @@
+*.vsix
+.gitignore
+.github/**
+pruebas/**
+logo/**
