@@ -1,8 +1,8 @@
-# MX Dev Tools 🇲🇽
+# RFC CURP CLABE 🇲🇽
 
 **RFC, CURP y CLABE en VS Code.** Pasa el mouse para ver qué significan, detecta los inválidos mientras escribes, corrige el dígito verificador con un clic y genera datos de prueba válidos. Todo funciona en tu equipo.
 
-**Por qué existe:** si programas en México (facturación, ERPs, fintech, formularios de registro), validas RFC, CURP y CLABE todo el tiempo y buscas en Google o en el SAT qué significan. MX Dev Tools lo trae a tu editor.
+**Por qué existe:** si programas en México (facturación, ERPs, fintech, formularios de registro), validas RFC, CURP y CLABE todo el tiempo y buscas en Google o en el SAT qué significan. RFC CURP CLABE lo trae a tu editor.
 
 ## Qué hace
 
@@ -12,7 +12,7 @@
   - **CLABE:** banco, plaza, número de cuenta y dígito de control. Catálogo de 138 bancos y fintech (Nu, Mercado Pago, Spin by OXXO, STP…).
 - **Avisos:** los inválidos se subrayan mientras escribes. Un número de 18 dígitos solo se revisa como CLABE si antes, en la misma línea, dice "clabe"; así no marca IDs ni fechas.
 - **Corrección rápida:** "Corregir dígito verificador" cambia el último carácter equivocado.
-- **Datos de prueba:** *MX Dev Tools: Generar dato de prueba* (paleta de comandos o clic derecho) inserta un RFC, CURP o CLABE válido y ficticio (eliges el banco), o una persona de prueba completa en JSON, con RFC y CURP que coinciden.
+- **Datos de prueba:** *RFC CURP CLABE: Generar dato de prueba* (paleta de comandos o clic derecho) inserta un RFC, CURP o CLABE válido y ficticio (eliges el banco), o una persona de prueba completa en JSON, con RFC y CURP que coinciden.
 
 ## Privacidad
 
@@ -22,7 +22,7 @@ Los RFC, CURP y cuentas bancarias son datos personales. **Nada sale de tu equipo
 
 | Ajuste | Por defecto | Para qué |
 |---|---|---|
-| `mxDevTools.avisos` | `true` | Subraya los RFC, CURP y CLABE inválidos. |
+| `rfcCurpClabe.avisos` | `true` | Subraya los RFC, CURP y CLABE inválidos. |
 
 ## Notas
 

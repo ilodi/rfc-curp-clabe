@@ -1,8 +1,8 @@
 {
-  "name": "mx-dev-tools",
-  "displayName": "MX Dev Tools",
+  "name": "rfc-curp-clabe",
+  "displayName": "RFC CURP CLABE",
   "description": "RFC, CURP y CLABE en VS Code: explica, valida, corrige el dígito verificador y genera datos de prueba. Todo local.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "lodi",
   "license": "MIT",
   "icon": "icon.png",
@@ -44,22 +44,22 @@
   "contributes": {
     "commands": [
       {
-        "command": "mxDevTools.generar",
-        "title": "MX Dev Tools: Generar dato de prueba (RFC, CURP, CLABE)"
+        "command": "rfcCurpClabe.generar",
+        "title": "RFC CURP CLABE: Generar dato de prueba (RFC, CURP, CLABE)"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "mxDevTools.generar",
+          "command": "rfcCurpClabe.generar",
           "group": "1_modification@99"
         }
       ]
     },
     "configuration": {
-      "title": "MX Dev Tools",
+      "title": "RFC CURP CLABE",
       "properties": {
-        "mxDevTools.avisos": {
+        "rfcCurpClabe.avisos": {
           "type": "boolean",
           "default": true,
           "description": "Subraya los RFC, CURP y CLABE inválidos. Un número de 18 dígitos solo se revisa como CLABE si antes, en la misma línea, dice \"clabe\"."

@@ -1,4 +1,4 @@
-// MX Dev Tools: RFC, CURP y CLABE en VS Code. Todo local: nada sale de tu equipo.
+// RFC CURP CLABE: RFC, CURP y CLABE en VS Code. Todo local: nada sale de tu equipo.
 const vscode = require('vscode');
 const mx = require('./lib/mx');
 
@@ -32,7 +32,7 @@ function explicar(r) {
 }
 
 function activate(context) {
-  const config = () => vscode.workspace.getConfiguration('mxDevTools');
+  const config = () => vscode.workspace.getConfiguration('rfcCurpClabe');
 
   // ---- Pasar el mouse ----
   context.subscriptions.push(vscode.languages.registerHoverProvider({ scheme: '*' }, {
@@ -45,7 +45,7 @@ function activate(context) {
   }));
 
   // ---- Avisos (subrayado) ----
-  const avisos = vscode.languages.createDiagnosticCollection('mxDevTools');
+  const avisos = vscode.languages.createDiagnosticCollection('rfcCurpClabe');
   context.subscriptions.push(avisos);
   function revisar(doc) {
     if (!config().get('avisos') || doc.getText().length > 1e6 || doc.uri.scheme === 'output') { avisos.delete(doc.uri); return; }
@@ -62,7 +62,7 @@ function activate(context) {
       const rango = new vscode.Range(doc.positionAt(m.index), doc.positionAt(m.index + valor.length));
       const d = new vscode.Diagnostic(rango, `${NOMBRES[r.tipo]} ${estado(r)}: ${r.errores.join(' ').replace(/\*\*/g, '')}`,
         vscode.DiagnosticSeverity.Warning);
-      d.source = 'MX Dev Tools';
+      d.source = 'RFC CURP CLABE';
       // Corrección rápida solo si cambiar el último dígito lo deja válido.
       const corregido = mx.analizar(valor.slice(0, -1) + r.digitoEsperado);
       d.code = r.digitoEsperado && corregido && corregido.valido ? 'digito:' + r.digitoEsperado : 'otro';
@@ -77,7 +77,7 @@ function activate(context) {
     vscode.workspace.onDidChangeTextDocument((e) => programar(e.document)),
     vscode.workspace.onDidCloseTextDocument((doc) => avisos.delete(doc.uri)),
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (e.affectsConfiguration('mxDevTools')) vscode.workspace.textDocuments.forEach(revisar);
+      if (e.affectsConfiguration('rfcCurpClabe')) vscode.workspace.textDocuments.forEach(revisar);
     }),
   );
   vscode.workspace.textDocuments.forEach(revisar);
@@ -85,7 +85,7 @@ function activate(context) {
   // ---- Corrección rápida del dígito verificador ----
   context.subscriptions.push(vscode.languages.registerCodeActionsProvider({ scheme: '*' }, {
     provideCodeActions(doc, _rango, ctx) {
-      return ctx.diagnostics.filter((d) => d.source === 'MX Dev Tools' && String(d.code).startsWith('digito:')).map((d) => {
+      return ctx.diagnostics.filter((d) => d.source === 'RFC CURP CLABE' && String(d.code).startsWith('digito:')).map((d) => {
         const digito = String(d.code).slice(7);
         const valor = doc.getText(d.range);
         const accion = new vscode.CodeAction(`Corregir dígito verificador → ${valor.slice(0, -1)}${digito}`, vscode.CodeActionKind.QuickFix);
@@ -99,7 +99,7 @@ function activate(context) {
   }, { providedCodeActionKinds: [vscode.CodeActionKind.QuickFix] }));
 
   // ---- Generar datos de prueba ----
-  context.subscriptions.push(vscode.commands.registerCommand('mxDevTools.generar', async () => {
+  context.subscriptions.push(vscode.commands.registerCommand('rfcCurpClabe.generar', async () => {
     const opciones = [
       { label: '$(person) RFC de persona física', id: 'rfcF' },
       { label: '$(organization) RFC de persona moral', id: 'rfcM' },
