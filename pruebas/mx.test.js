@@ -52,4 +52,17 @@ prueba('Persona de prueba: RFC y CURP coinciden', () => {
   assert.strictEqual(p.rfc.slice(0, 10), p.curp.slice(0, 10));
   assert.ok(mx.analizar(p.rfc).valido && mx.analizar(p.curp).valido && mx.analizar(p.clabe).valido);
 });
+// --- Hallazgos de la auditoría (0.2.1) ---
+prueba('RFC con palabra de la lista de RENAPO no se rechaza (la lista del SAT es otra)', () => {
+  const base = 'LOCA800101AB'; assert.strictEqual(mx.analizarRfc(base + mx.digitoRfc(base)).valido, true);
+});
+prueba('RFC con fecha posterior a hoy se ignora', () => {
+  // El año va en 2 dígitos ("27" es 1927): una fecha futura solo cabe en el año en curso, p. ej. el 31 de diciembre.
+  const hoy = new Date(); if (hoy.getMonth() === 11 && hoy.getDate() === 31) return; // ese día no aplica
+  const base = 'ABC' + String(hoy.getFullYear() % 100).padStart(2, '0') + '1231AB';
+  assert.strictEqual(mx.analizarRfc(base + mx.digitoRfc(base)), null);
+});
+prueba('CLABE con banco 999 (N/A) es inválida', () => {
+  const base = '99901007777777777'; assert.strictEqual(mx.analizarClabe(base + mx.digitoClabe(base)).valido, false);
+});
 console.log(`\n${ok} pruebas pasaron`);

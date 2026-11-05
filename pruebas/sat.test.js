@@ -25,8 +25,30 @@ prueba('Régimen 616 (sin obligaciones) admite solo CP01, G02 y S01', () => asse
 prueba('Autocompletar: campo en el cursor y sugerencias', () => {
   const c = sat.campoEnCursor('<cfdi:Receptor UsoCFDI="G0');
   assert.strictEqual(c.campo.id, 'uso'); assert.strictEqual(c.escrito, 'G0');
-  assert.deepStrictEqual(sat.sugerencias('uso', 'G0').map((s) => s.clave), ['G01', 'G02', 'G03']);
-  assert.ok(sat.sugerencias('producto', '').length <= 200);
+  assert.deepStrictEqual(sat.sugerencias('uso', 'G0').items.map((s) => s.clave), ['G01', 'G02', 'G03']);
+  const p = sat.sugerencias('producto', '');
+  assert.ok(p.items.length === 200 && p.cortada);
 });
 prueba('Un número cualquiera no se toma por código postal', () => assert.strictEqual(en('pedido = "38000"').length, 0));
+// --- Hallazgos de la auditoría (0.2.1) ---
+prueba('Usos de 4 caracteres: CP01 y CN01', () => {
+  assert.strictEqual(en('UsoCFDI="CP01"')[0][2], 'Pagos');
+  assert.ok(en('UsoCFDI="CN01"')[0][2].startsWith('Nómina'));
+  assert.ok(!sat.buscar('uso', 'CN01').regimenes.includes('601')); // CN01 no aplica a 601
+});
+prueba('Unidades: las comunes primero y búsqueda por descripción', () => {
+  assert.strictEqual(sat.sugerencias('unidad', '').items[0].clave, 'H87');
+  assert.ok(sat.sugerencias('unidad', 'H8').items.some((s) => s.clave === 'H87'));
+  assert.ok(sat.sugerencias('unidad', 'pieza').items.some((s) => s.clave === 'H87'));
+  assert.ok(sat.sugerencias('producto', 'computadores notebook').items.some((s) => s.clave === '43211503'));
+});
+prueba('Formas de pago ordenadas (01 antes que 99)', () => {
+  const c = sat.sugerencias('forma', '').items.map((s) => s.clave);
+  assert.strictEqual(c[0], '01');
+});
+prueba('PHP (=>), Go (:=) y FormaDePagoP', () => {
+  assert.strictEqual(en("'UsoCFDI' => 'G03'")[0][2], 'Gastos en general.');
+  assert.strictEqual(en('usoCFDI := "G03"')[0][2], 'Gastos en general.');
+  assert.strictEqual(en('FormaDePagoP="03"')[0][2], 'Transferencia electrónica de fondos');
+});
 console.log(`\n${ok} pruebas pasaron`);

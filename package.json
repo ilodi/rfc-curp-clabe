@@ -1,8 +1,8 @@
 {
   "name": "rfc-curp-clabe",
   "displayName": "RFC CURP CLABE",
-  "description": "RFC, CURP, CLABE y catálogos del SAT (CFDI 4.0) en VS Code: explica, valida, autocompleta y genera datos de prueba. Todo local.",
-  "version": "0.2.0",
+  "description": "Valida y explica RFC, CURP, CLABE y claves del SAT (CFDI 4.0); autocompleta y genera datos de prueba. Sin red.",
+  "version": "0.2.1",
   "publisher": "lodi",
   "license": "MIT",
   "icon": "icon.png",
@@ -37,7 +37,13 @@
     "uso cfdi",
     "régimen fiscal",
     "código postal",
-    "clave prod serv"
+    "clave prod serv",
+    "banxico",
+    "renapo",
+    "spei",
+    "facturación electrónica",
+    "timbrado",
+    "xml"
   ],
   "galleryBanner": {
     "color": "#1a1d24",
@@ -47,33 +53,49 @@
     "onStartupFinished"
   ],
   "main": "./extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": false
+  },
   "contributes": {
     "commands": [
       {
         "command": "rfcCurpClabe.generar",
-        "title": "RFC CURP CLABE: Generar dato de prueba (RFC, CURP, CLABE)"
+        "category": "RFC CURP CLABE",
+        "title": "Generar dato de prueba (RFC, CURP, CLABE)"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "command": "rfcCurpClabe.generar",
-          "group": "1_modification@99"
+          "group": "1_modification@99",
+          "when": "!editorReadonly"
         }
       ]
     },
     "configuration": {
       "title": "RFC CURP CLABE",
       "properties": {
+        "rfcCurpClabe.explicar": {
+          "type": "boolean",
+          "default": true,
+          "scope": "language-overridable",
+          "description": "Explica los RFC, CURP y CLABE al pasar el mouse."
+        },
         "rfcCurpClabe.avisos": {
           "type": "boolean",
           "default": true,
-          "description": "Subraya los RFC, CURP y CLABE inválidos. Un número de 18 dígitos solo se revisa como CLABE si antes, en la misma línea, dice \"clabe\"."
+          "scope": "language-overridable",
+          "markdownDescription": "Subraya los RFC, CURP y CLABE inválidos. Un número de 18 dígitos solo se revisa como CLABE, y un RFC de 12 caracteres (persona moral) solo se revisa, si justo antes dice \"clabe\" o \"rfc\". Se puede apagar por lenguaje, por ejemplo `\"[csv]\": { \"rfcCurpClabe.avisos\": false }`."
         },
         "rfcCurpClabe.catalogos": {
           "type": "boolean",
           "default": true,
-          "description": "Catálogos del SAT para CFDI 4.0: explica, autocompleta y valida claves (UsoCFDI, RegimenFiscal, FormaPago, MetodoPago, ClaveProdServ, ClaveUnidad, código postal…)."
+          "scope": "language-overridable",
+          "description": "Catálogos del SAT para CFDI 4.0: explica, autocompleta y avisa de claves que no existen (UsoCFDI, RegimenFiscal, FormaPago, MetodoPago, ClaveProdServ, ClaveUnidad, código postal…)."
         }
       }
     }

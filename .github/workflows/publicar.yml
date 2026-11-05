@@ -13,13 +13,17 @@ jobs:
       contents: read
       id-token: write # para Trusted Publishing
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Revisar que la etiqueta coincide con package.json
         run: |
           v=$(node -p "require('./package.json').version")
           [ "v$v" = "$GITHUB_REF_NAME" ] || { echo "La etiqueta $GITHUB_REF_NAME no coincide con la versión $v de package.json"; exit 1; }
+      - name: Pruebas
+        run: for f in pruebas/*.test.js; do node "$f" || exit 1; done
       - name: Publicar
         run: npx -y @vscode/vsce@4.1.0 publish --oidc --skip-duplicate
